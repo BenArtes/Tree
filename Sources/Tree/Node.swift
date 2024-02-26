@@ -20,7 +20,7 @@ public final class Node<Element: Identifiable>: Identifiable {
 ///
 /// This value can be any type that conforms to `Identifiable`.
 ///
-	public let element: Element
+	public var element: Element
 
 /// The parent node for this node.
 ///
@@ -76,7 +76,7 @@ extension Node {
 ///   - node: The node to insert into the tree.
 ///   - child: The existing child the new node will be a parent of.
 ///
-	private static func insert(parent node: Node<Element>, into child: Node<Element>) {
+	public static func insert(parent node: Node<Element>, into child: Node<Element>) {
 		// Find the index of the child on it's parent.
 		//
 		let index = {
@@ -108,7 +108,7 @@ extension Node {
 ///   - node: The node to insert into the tree.
 ///   - parent: The existing parent the new node will be a child of.
 ///
-	private static func insert(child node: Node<Element>, into parent: Node<Element>) {
+    public static func insert(child node: Node<Element>, into parent: Node<Element>) {
 		node.children.append(contentsOf: parent.children)
 		for child in node.children {
 			child.parent = node
@@ -126,7 +126,7 @@ extension Node {
 /// - Parameters:
 ///   - node: The node to remove.
 ///
-	private static func prune(node: Node<Element>) {
+    public static func prune(node: Node<Element>) {
 		node.parent?.children.removeAll {
 			$0.id == node.id
 		}
@@ -146,7 +146,7 @@ extension Node {
 /// - Returns: The parent node, or orphaned children of this node.
 ///
 	@discardableResult
-	private static func extract(node: Node<Element>) -> [Node<Element>] {
+    public static func extract(node: Node<Element>) -> [Node<Element>] {
 		if let parent = node.parent {
 			// Remove the node from the parent, and insert the nodes children
 			// at the same position.
